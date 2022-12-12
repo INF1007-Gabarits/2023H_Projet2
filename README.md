@@ -15,7 +15,7 @@
 - [Barème](#bareme)
 - [Annexe: Guide et normes de codage](#annexe)
 
-:alarm_clock: [Date de remise le dimanche 4 novembre à 23h59]
+:alarm_clock: Date de remise le dimanche 19 mars 2023 à 23h59.
 
 ## Directives particulières <a name="directives"></a>
 * Respecter [guide de codage](https://github.com/INF1007-Gabarits/Guide-codage-python) et les normes pep8;
