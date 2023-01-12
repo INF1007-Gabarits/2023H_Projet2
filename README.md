@@ -44,7 +44,7 @@ Dans ce qui suit, nous expliquons les différents concepts.
 <li> <b> y</b>  : position en y de la molécule</li>
 <li> <b> dx</b> : vitesse de déplacement en x de la molécule</li>
 <li> <b> dy</b> : vitesse de déplacement en y de la molécule</li>
-<li> <b> r</b>  : rayon de la molécule</li>
+<li> <b> rayon</b> : rayon de la molécule</li>
 </ul></ol>
 
 ### 2.2. Structure de données d'un réservoir <a name="reservoir"></a> 
@@ -58,7 +58,16 @@ Dans ce qui suit, nous expliquons les différents concepts.
 <li> <b>lCG</b>    : liste des collisions de la partie gauche du réservoir</li> 
 <li> <b>lCD</b>    : liste des collisions de la partie droite du réservoir </li>
 </ul></ol>
+<p><b>NOTE</b>: Les listes de collisions (les clés lCG et lCD du dictionnaire) représentent toutes les collisions possibles entre toutes les molécules sous forme de listes d'entiers, où 1 représente une collision et où 0 représente l'absence de collision.</p>
 
+```python
+# Par exemple, si l'on possède cinq molécules (A, B, C et D) dans notre 
+# réservoir de gauche et que les couples (A-D) et (B-C) sont en collision, 
+# notre liste représentera les collisions sour la forme suivante:
+# lCG = [ (A-B), (A-C), (A-D), (B-C), (B-D), (C-D) ]
+# ce qui donne
+lCG = [0, 0, 1, 1, 0, 0]
+```
 ## 3. Modules à implémenter <a name="module"></a>
 
 La figure 1 représente l'arbre des appels de fonctions à implémenter.
@@ -74,18 +83,20 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 <dl>
   <dt>3.1.1. creerMolecule(x, y, dx, dy, rayon):</dt>
   <dd><p align='justify'>Crée une molécule. La fonction reçoit la position <b>(x, y)</b> de la molécule, ça vitesse <b>(dx, dy)</b> et son <b>rayon</b>. La fonction renvoie un dictionnaire.</p></dd>
+
+  <p><b>Note:</b> La strucutre du dictionnaire du réservoir est présentée dans la section 2.1.</p>
 	
   <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li><b> x[1x1]</b>: position en x de la molécule.</li>
-			<li><b> y[1x1]</b>:  position en y de la molécule.</li>
-			<li><b> dx[1x1]</b>: vitesse de déplacement en x de la molécule.</li>
-			<li><b> dy[1x1]</b>: vitesse de déplacement en y de la molécule.</li>
-			<li><b> rayon[1x1]</b>: rayon de la molécule.</li>
+			<li><b> x[float]</b>: position en x de la molécule.</li>
+			<li><b> y[float]</b>:  position en y de la molécule.</li>
+			<li><b> dx[float]</b>: vitesse de déplacement en x de la molécule.</li>
+			<li><b> dy[float]</b>: vitesse de déplacement en y de la molécule.</li>
+			<li><b> rayon[float]</b>: rayon de la molécule.</li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li><b>molecule[1x1]</b>: un dictionnaire de type molécule.</li>
+			<li><b>molecule[dict]</b>: un dictionnaire de type molécule.</li>
   	</ul></ol>
 </dl>	
 
@@ -101,10 +112,13 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 	
   <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li><b>mol_1[1x1]</b>: dictionnaire de type molécule.</li>
-			<li><b>mol_2[1x1]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol_1[dict]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol_2[dict]</b>: dictionnaire de type molécule.</li>
   	</ul></ol>
-<dd><p align='justify'><code> <b>Note:</b> Valide que les deux molécules reçues en paramètre sont des dictionnaires de type molécule.</code></p></dd>
+	<dd><b>Renvoie:</b></dd>
+		<ol><ul>
+			<li><b>resultat[bool]</b>: True si les deux molécules se touchent, sinon False.</li>
+  	</ul></ol>
 </dl>	
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -113,13 +127,12 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
   <dd><p align='justify'> On déplace une molécule simplement en ajoutant la vitesse à la position <b>(x + dx et y + dy)</b>. </p></dd>
   <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li><b>mol[1x1]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol[dict]</b>: dictionnaire de type molécule.</li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li><b>mol[1x1]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol[dict]</b>: dictionnaire de type molécule.</li>
   	</ul></ol>
-<dd><p align='justify'><code> <b>Note:</b> Valide que la molécule reçue en paramètre est un dictionnaire de type molécule.</code></p></dd>
 </dl>	
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -128,13 +141,13 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
   <dd><p align='justify'>Nous vous offrons le code de cette fonction qui provient du WEB et que j’ai adaptée. Vous ne devez pas la modifier. </p></dd>
   <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li><b>mol_1[1x1]</b>: dictionnaire de type molécule.</li>
-			<li><b>mol_2[1x1]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol_1[dict]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol_2[dict]</b>: dictionnaire de type molécule.</li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li><b>mol_1[1x1]</b>: dictionnaire de type molécule.</li>
-			<li><b>mol_2[1x1]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol_1[dict]</b>: dictionnaire de type molécule.</li>
+			<li><b>mol_2[dict]</b>: dictionnaire de type molécule.</li>
   	</ul></ol>
 </dl>	  
 
@@ -142,14 +155,15 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 
 <dl>
  <dt> 3.1.5.creerListMolecules(hauteur,xmin,xmax,nbMolecules):</dt>
-  <dd><p align='justify'>Crée une liste de molécules. La fonction reçoit la hauteur du réservoir, la position x minimale et maximale et le nombre de molécules a créé. Vous pouvez générer les positions <b>(x, y)</b>, les vitesses <b>(dx, dy)</b> et le rayon des molécules aléatoirement. Plus les vitesses sont rapides, moins l’affichage est réaliste. Plus les vitesses sont lentes, moins elles se stabiliseront rapidement.</p>
+  <dd><p align='justify'>Crée une liste de molécules. La fonction reçoit la hauteur du réservoir, la position x minimale et maximale et le nombre de molécules a créé. Vous pouvez générer les positions <b>(x, y)</b>, les vitesses <b>(dx, dy)</b> et le rayon des molécules aléatoirement. L'intervalle de vitesses à générer est à votre discrétion. Plus les vitesses sont rapides, moins l’affichage est réaliste. Plus les vitesses sont lentes, moins elles se stabiliseront rapidement.</p>
+  <p align='justify'><b>Important</b> : N'oubliez pas de prendre en compte le rayon des molécules dans la génération des positions pour ne pas qu’elles sortent du réservoir.</p>
 </dd>
   <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>hauteur[1x1]</b>      : hauteur du réservoir</li>
-			<li> <b>xmin[1x1]</b>      : position x minimale</li>
-			<li> <b>xmax[1x1]</b> : position x maximale</li>
-			<li> <b>nbMolecules[1x1]</b> : nombre de molécules a créé</li>
+			<li> <b>hauteur[float]</b>      : hauteur du réservoir</li>
+			<li> <b>xmin[float]</b>      : position x minimale</li>
+			<li> <b>xmax[float]</b> : position x maximale</li>
+			<li> <b>nbMolecules[int]</b> : nombre de molécules à créer</li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
@@ -165,16 +179,15 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
   <dd><p align='justify'>Si une molécule touche à une paroi extérieure ou intérieure, il faut que la molécule rebondisse. On sait si une molécule sort du réservoir si sa position en <b>x ou en y ± rayon</b> est hors limite. Par exemple, après un déplacement, si <b>x–rayon <= paroiG</b> alors il faut repositionner <b>x</b> sur le bord de la paroi et changer le signe de <b>dx</b>. Même chose pour la paroi de droite et même chose en <b>y</b> avec le haut et le bas.</p></dd>
 	  <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>mol[1x1]</b>      : dictionnaire de type molécule</li>
-			<li> <b>paroiG[1x1]</b>      : paroi gauche</li>
-			<li> <b>paroiD[1x1]</b>      : paroi droite</li>
-			<li> <b>hauteur[1x1]</b> : hauteur du réservoir</li>
+			<li> <b>mol[dict]</b>      : dictionnaire de type molécule</li>
+			<li> <b>paroiG[float]</b>      : paroi gauche</li>
+			<li> <b>paroiD[float]</b>      : paroi droite</li>
+			<li> <b>hauteur[float]</b> : hauteur du réservoir</li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li> <b>mol[1x1]</b>: dictionnaire de type molécule </li>
+			<li> <b>mol[dict]</b>: dictionnaire de type molécule </li>
   	</ul></ol>
-<dd><p align='justify'><code> <b>Note:</b> Valide que la molécule reçue en paramètre est un dictionnaire de type molécule.</code></p></dd>
 </dl>
 	
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,20 +196,31 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 
  <dt> 3.2.1.creerReservoir(hauteur,largeur,posParoi,nbMoleculesG,nbMoleculesD):</dt>
   <dd><p align='justify'>Crée un réservoir et ajoute le nombre de molécules fourni pour chaque côté. La fonction reçoit la hauteur du réservoir, la largeur du réservoir, la position de la paroi et le nombre de molécules de chaque côté de la paroi et renvoie un dictionnaire qui contient tous les paramètres du réservoir.</p>
-		  
-<p>Nous retenons les molécules dans deux listes. Une liste de molécules pour le côté gauche et une pour le côté droit. Vous devez donc générer aléatoirement des positions qui se trouvent à l’intérieur des parois selon le côté. </p></dd>
+
+  <p align='justify'>Nous retenons les molécules dans deux listes. Une liste de molécules pour le côté gauche et une pour le côté droit. Vous devez donc générer aléatoirement des positions qui se trouvent à l’intérieur des parois selon le côté. </p>
+
+  <p>La liste des collisions poura, pour l'instant, être représentée par une liste de 0 (dans l'index de chaque collision possible - voir la section 2.2). La formule mathématique pour calculer le nombre de combinaisons distinctes sans répétition (la longueur de la liste) est : 
+
+  <p align='center'>
+	<img src="https://latex.codecogs.com/svg.image?\frac{n!}{r!(n-r)!}" title="\frac{n!}{r!(n-r)!}" />
+  </p> 
+  <p align='justify'> où <b>n</b> est le nombre de molécules et <b>r</b> le nombre de molécules impliqués dans une collision.</p> 
+
+  <p align='justify'>Donc, pour 5 molécules, vous aurez 5!/(2!*(5-2)!) => 10 combinaisons distinctes de collisions. </p> 
+
+  <p align='justify'><b>Note :</b> La strucutre du dictionnaire du réservoir est présentée dans la section 2.2.</p></dd>
   <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>hauteur[1x1]</b>      : hauteur du réservoir</li>
-			<li> <b>largeur[1x1]</b>      : largeur du réservoir</li>
-			<li> <b>posPar[1x1]</b> : position de la paroi</li>
-			<li> <b>nbMoleculesG[1x1]</b> : nombre de molécules de la partie gauche du réservoir /li>
-			<li> <b>nbMoleculesD[1x1]</b> : nombre de molécules de la partie droite du réservoir /li>
+			<li> <b>hauteur[float]</b>      : hauteur du réservoir</li>
+			<li> <b>largeur[float]</b>      : largeur du réservoir</li>
+			<li> <b>posPar[float]</b> : position de la paroi</li>
+			<li> <b>nbMoleculesG[int]</b> : nombre de molécules de la partie gauche du réservoir </li>
+			<li> <b>nbMoleculesD[int]</b> : nombre de molécules de la partie droite du réservoir </li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>: dictionnaire de type réservoir </li>
-  	</ul></ol>
+			<li> <b>reservoir[dict]</b>: dictionnaire de type réservoir </li>
+  	</ul></ol> 
 </dl>		
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -204,9 +228,11 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 <dt> 3.2.2.colision(reservoir):</dt>
   <dd><p align='justify'>Nous implémentons un algorithme très vorace qui ne nous permet pas d’utiliser beaucoup de molécules. Nous pourrions optimiser, mais les techniques nécessaires dépassent les objectifs de ce projet. </p>
 
-<p align='justify'> Donc, nous allons vérifier chaque molécule avec toutes les autres pour vérifier si elles se touchent. </p>
+<p align='justify'> Donc, nous allons vérifier si chaque molécule de chaque côté du réservoir est en collision avec une molécule du même côté du réservoir (à l'aide de la méthode <b>moleculesSeTouche</b>). Si c'est le cas, nous devons ajuster la directions des deux molécules. </p>
 
-<p align='justify'> Voici l’algorithme global:  </p>
+<p align='justify'> Les listes de collisions (lCG et lCD) devront être mises à jour à fur et à mesure que l'on compare les molécules entre elles. Donc, lorsqu'une combinaison de molécules collisionne, on doit mettre le chiffre 1 à l'index de la combinaison dans la liste de collisions. Sinon, on met le chiffre 0. </p>
+
+<p align='justify'> Voici un algorithme qui permet de vérifier toutes les combinaisons de molécules. Il pourra être suivi pour chaque côté du réservoir : </p>
 	  
 <p align="center">
   <img src="Img/Img_03.png" alt>
@@ -218,13 +244,12 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 	
 <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>      : dictionnaire de type réservoir</li>
+			<li> <b>reservoir[dict]</b>      : dictionnaire de type réservoir</li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>: dictionnaire de type réservoir </li>
+			<li> <b>reservoir[dict]</b>: dictionnaire de type réservoir </li>
   	</ul></ol>
-<dd><p align='justify'><code> <b>Note:</b> Valide que le réservoir reçu en paramètre est un dictionnaire de type réservoir.</code></p></dd>
 </dl>	
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -233,13 +258,12 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
   <dd><p align='justify'>Ajuste la direction des molécules qui touchent aux parois (des deux côtés). </p></dd>
 	<dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>      : dictionnaire de type réservoir</li>
+			<li> <b>reservoir[dict]</b>      : dictionnaire de type réservoir</li>
   	</ul></ol>
 	<dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>: dictionnaire de type réservoir </li>
+			<li> <b>reservoir[dict]</b>: dictionnaire de type réservoir </li>
   	</ul></ol>
-<dd><p align='justify'><code> <b>Note:</b> Valide que le réservoir reçu en paramètre est un dictionnaire de type réservoir.</code></p></dd>
 </dl>	
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -266,7 +290,7 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 
 <dd><b>Où:</b></dd>
 		<ol><ul>
-			<li> <b>m</b>  : la masse de la molécule</li>
+			<li> <b>m</b>  : la masse de la molécule (qu'on peut mettre à 1)</li>
 			<li> <b>v</b>      : la vitesse de la molécule</li>
   	</ul></ol>
 
@@ -276,16 +300,15 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 </p>
 	<dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>  : dictionnaire de type réservoir</li>
-			<li> <b>coter[1x1]</b>      : le côté du réservoir ("Droit" ou "Gauche"</li>
-  	</ul></ol>
-	
-<dd><b>Renvoie:</b></dd>
+			<li> <b>reservoir[dict]</b>  : dictionnaire de type réservoir</li>
+			<li> <b>coter[str]</b>      : le côté du réservoir (les valeurs possibles sont "Droite" et "Gauche")</li>
+  		</ul></ol>
+	<dd>
+<b>Renvoie:</b></dd>
 		<ol><ul>
-			<li> <b>T[1x1]</b>  : Température du côté du réservoir</li>
+			<li> <b>T[float]</b>  : Température du côté du réservoir</li>
   	</ul></ol>
 	
-<dd><p align='justify'><code> <b>Note:</b> Valide que le réservoir reçu en paramètre est un dictionnaire de type réservoir.</code></p></dd>
 </dl>	
 
 
@@ -295,9 +318,8 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
   <dd><p align='justify'>Nous vous offrons le code de cette fonction qui l'affiche du déplacement des molécules.  </p></dd>
 	<dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>      : dictionnaire de type réservoir</li>
+			<li> <b>reservoir[dict]</b>      : dictionnaire de type réservoir</li>
   	</ul></ol>
-<dd><p align='justify'><code> <b>Note:</b> Valide que le réservoir reçu en paramètre est un dictionnaire de type réservoir.</code></p></dd>
 </dl>	
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -311,13 +333,12 @@ La figure 1 représente l'arbre des appels de fonctions à implémenter.
 
 <dd><b>Paramètres:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>      : dictionnaire de type réservoir</li>
+			<li> <b>reservoir[dict]</b>      : dictionnaire de type réservoir</li>
   	</ul></ol>
 <dd><b>Renvoie:</b></dd>
 		<ol><ul>
-			<li> <b>reservoir[1x1]</b>: dictionnaire de type réservoir </li>
+			<li> <b>reservoir[dict]</b>: dictionnaire de type réservoir </li>
   	</ul></ol>
-<dd><p align='justify'><code> <b>Note:</b> Valide que le réservoir reçu en paramètre est un dictionnaire de type réservoir.</code></p></dd>
 </dl>	
 
 
