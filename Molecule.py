@@ -72,12 +72,12 @@ def inverseDirMolecule(mol, paroiG, paroiD, hauteur):
 
 
 
-    # Si la molécule touche la paroi gauche du réservoir en x
+    # Si la molécule touche la paroi du haut du réservoir
 
         # Repositionner la molécule et changer sa direction dy
 
 
-    # Si la molécule touche la paroi droite du réservoir en y
+    # Si la molécule touche la paroi du bas du réservoir
 
         # Repositionner la molécule et changer sa direction dy
 
