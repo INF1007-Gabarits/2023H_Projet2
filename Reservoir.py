@@ -48,7 +48,7 @@ def affichage(reservoir, ax):
 
     ax.plot([reservoir['posPar'], reservoir['posPar']], [0, reservoir['h']], 'k-', linewidth=10)
     ax.axis([-20, reservoir['l'] + 20, -20, reservoir['h'] + 20])
-    ax.title.set_text(txt.format(getTemperature(reservoir, "Gauche"), getTemperature(reservoir, "Droit")))
+    ax.title.set_text(txt.format(getTemperature(reservoir, "Gauche"), getTemperature(reservoir, "Droite")))
 
     for k in [['mG', 'ro'], ['mD', 'go']]:
         for i in range(len(reservoir[k[0]])):
